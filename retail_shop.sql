@@ -17,7 +17,7 @@ create table retial_shop(
 			    weight_g numeric(10, 2),
 			    warranty_months int,
 			    color varchar(50),
-			    size varchar(50),
+			    sizes varchar(50),
 			    return_policy varchar(100),
 			    is_returnable varchar(50),
 			    payment_method varchar,
@@ -113,7 +113,9 @@ select seller_city from retail_shop group by seller_city;
 
 select max(price) from retail_shop;
 
-select brand, count(*) from retail_shop group by brand ;
+select 
+	brand, 
+	count(*) from retail_shop group by brand ;
 
 select 
 	delivery_days,
@@ -152,7 +154,120 @@ select
 	order by weight_g desc
 	limit 15;
 
+select 
+	category, count(*) from retail_shop
+	group by  category;
+
+select
+	max(price),
+	avg(price),
+	min(price) 
+	from retail_shop;
+
+select 
+	max(discount_price),
+	avg(discount_price),
+	min(discount_price)
+	from retail_shop;
+
+select 
+	max(final_price),
+	avg(final_price),
+	min(final_price)
+	from retail_shop;
+
+select
+	max(rating),
+	min(rating)
+	from retail_shop;
+		
+select
+	color,
+	count(*) as count_color
+	from retail_shop
+	group by color;
+
+select
+	sizes,
+	count(*) as count_size
+	from retail_shop
+	group by sizes;
+
+alter table retail_shop rename column size to sizes;	
+
+select 
+	payment_method,
+	count(*) as count_pay_met
+	from retail_shop
+	group by  payment_method
+	order by count_pay_met desc;
+	
+select*from retail_shop;
+
+select category from retail_shop;
+
+select 
+	category,
+	brand,
+	sum(units_sold)
+	from retail_shop
+	where category='Electronics'
+	group by brand, category
+	order by sum(units_sold) desc;
 
 
+select
+	payment_method,
+	round(avg(discount_price), 2) as avg_disc_pr,
+	round(avg(final_price), 2) as avg_final_pr
+	from retail_shop
+	where seller_city='Mumbai'
+	group by payment_method
+	order by avg_disc_pr desc;
 	
+
+select
+	brand,
+	count(*) as count_brand,
+	round(avg(final_price), 2) as avg_final_price
+	from retail_shop
+	where category='Fashion' and stock_availability>5
+	group by brand
+	order by brand asc
+	limit 10;
+
+select 
+	seller_city,
+	count(*) as count_seller_city,
+	round(avg(delivery_days),2)
+	from retail_shop
+	where payment_method like '%CARD%'
+	group by seller_city
+	having count(*)>10000
+	order by count(*) desc;
+
+select 
+	case
+		when final_price>20000 then 'High price'
+		else 'Low price'
+		end as price_category,
+		count(*),
+		round(avg(final_price),2) as avg_final_price,
+		max(final_price),
+		min(final_price)
+		from retail_shop
+		group by price_category;
+		
 	
+
+	
+
+
+
+
+
+
+
+
+
+
