@@ -259,7 +259,13 @@ select
 		group by price_category;
 		
 	
-
+select 
+	final_price, 
+	product_name
+	from retail_shop
+	where category='Fashion'
+	order by final_price desc
+	limit 20;
 	
 
 
